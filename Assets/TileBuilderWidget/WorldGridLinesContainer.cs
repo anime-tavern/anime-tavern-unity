@@ -175,6 +175,7 @@ public class WorldGridLinesContainer : MonoBehaviour
                     if (TileBuilderWindow.instance.brushType == TileBuilderWindow.BrushType.Paint)
                     {
                         this.rotateUVMapsOfTileMesh();
+                        currentEvent.Use();
                     }
                 }
             }

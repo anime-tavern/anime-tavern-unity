@@ -1,1 +1,2 @@
-# anime-tavern-unity
+# Anime Tavern - a Unity MMORPG Project
+Coming soon to theaters near you...

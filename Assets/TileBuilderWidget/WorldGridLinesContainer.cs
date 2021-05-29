@@ -308,7 +308,7 @@ public class WorldGridLinesContainer : MonoBehaviour
     }
 
     /**
-     * Toggles the isWalkable flag on tiles
+     * Paints the tiles with the current texture in the tile editor
      */
     public void paintTiles()
     {

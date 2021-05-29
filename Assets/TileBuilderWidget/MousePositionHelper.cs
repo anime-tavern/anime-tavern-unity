@@ -17,26 +17,32 @@ public class MousePositionHelper
     public static Vector3 GetWorldPositionFromMousePosition(Vector3 mousePosition)
     {
         // How far the distance to the end location is. This will be changed by Raycast()
-        float distance = 0;
+        float distanceToHitTile = 0;
+        float distanceToOriginPlane = 0;
 
         // Convert the screen position to a ray
         Ray ray = SceneView.lastActiveSceneView.camera.ScreenPointToRay(mousePosition);
+        Ray rayToOriginPlane = SceneView.lastActiveSceneView.camera.ScreenPointToRay(mousePosition);
 
         // Create a plane at a given intersection point that faces updwards
         // Then raycast to it
-        Plane hPlane = new Plane(Vector3.up, new Vector3(0,-10,0));
-        hPlane.Raycast(ray, out distance);
+        Plane hPlane = new Plane(Vector3.up, new Vector3(0,-35,0));
+        hPlane.Raycast(ray, out distanceToHitTile);
+
+        // Create a plane at 0,0,0 in case no tile was hit by the negative plane
+        Plane originPlane = new Plane(Vector3.up, new Vector3(0, 0, 0));
+        originPlane.Raycast(rayToOriginPlane, out distanceToOriginPlane);
 
         // distance is now the distance to the desired plane
         RaycastHit hit;
-        bool didHit = Physics.Raycast(ray.origin, ray.direction, out hit, distance);
+        bool didHit = Physics.Raycast(ray.origin, ray.direction, out hit, distanceToHitTile);
         if (didHit)
         {
             return hit.point;
         }
         else
         {
-            return ray.GetPoint(distance);
+            return rayToOriginPlane.GetPoint(distanceToOriginPlane);
         }
     }
 

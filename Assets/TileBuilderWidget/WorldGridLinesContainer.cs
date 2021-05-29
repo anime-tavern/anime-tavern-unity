@@ -170,6 +170,13 @@ public class WorldGridLinesContainer : MonoBehaviour
                     TileBuilderWindow.instance.swapToTool(TileBuilderWindow.instance.brushType);
                     currentEvent.Use();
                 }
+                else if (currentEvent.keyCode == KeyCode.R)
+                {
+                    if (TileBuilderWindow.instance.brushType == TileBuilderWindow.BrushType.Paint)
+                    {
+                        this.rotateUVMapsOfTileMesh();
+                    }
+                }
             }
         }
     }
@@ -327,6 +334,30 @@ public class WorldGridLinesContainer : MonoBehaviour
             if (existingTile != null)
             {
                 existingTile.meshRenderer.material = (Material) TileBuilderWindow.instance.materialField;
+            }
+        }
+    }
+
+    /**
+     * Rotates the UV maps of a tile mesh by 90 degrees CW
+     */
+    public void rotateUVMapsOfTileMesh()
+    {
+
+        Vector3[] gridGuidelineTileCenters = GridGuidelines.gridGuidelineTileCenters.ToArray();
+        foreach (Vector3 tileCenterPositionInObjectSpace in gridGuidelineTileCenters)
+        {
+            Vector3 tileCenterPosition = WorldGrid.worldPositionToNearestTileCenter(
+                GridGuidelines.currentGuidelinesRenderFromPosition
+            ) + tileCenterPositionInObjectSpace;
+
+            // The current tile layer where tiles are being adjusted
+            int currentLayer = TileBuilderWindow.instance.gridLayer;
+
+            Tile existingTile = WorldGrid.getTileAtWorldPositionOnLayer(tileCenterPosition, currentLayer);
+            if (existingTile != null)
+            {
+                existingTile.rotateUVs90DegreesClockwise();
             }
         }
     }

@@ -21,6 +21,7 @@ public class TileBuilderWindow : EditorWindow
         Smoothen = 5,
         Remove = 6,
         SetWalkable = 7,
+        Paint = 8,
     };
 
     public UnityEngine.Object materialField;
@@ -109,6 +110,11 @@ public class TileBuilderWindow : EditorWindow
                 GridGuidelines.disableRendering();
                 GridGuidelines.enableRendering();
             }
+        }
+
+        if (GUILayout.Button("Paint Material"))
+        {
+            this.swapToTool(BrushType.Paint);
         }
 
         this.DrawUILine(new Color(0.3f, 0.3f, 0.3f), 2, 28);

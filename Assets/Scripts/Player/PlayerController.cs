@@ -329,7 +329,6 @@ public class PlayerController : MonoBehaviour
     {
         
         Ray mouseRay = this.playerCamera.GetComponent<Camera>().ScreenPointToRay(mousePosition);
-        Debug.DrawRay(mouseRay.origin, mouseRay.direction * 1000, Color.white, 3);
         (GameObject objectClicked, Vector3 hitPoint) = PlayerController.RaycastToObject(mouseRay);
         if (Tile.isGameObjectATile(objectClicked))
         {

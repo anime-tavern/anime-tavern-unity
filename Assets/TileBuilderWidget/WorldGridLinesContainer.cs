@@ -426,7 +426,7 @@ public class WorldGridLinesContainer : MonoBehaviour
             }
             else
             {
-                // Debug.Log("TILE EXISTS HERE");
+                // A tile already exists here
             }
         }
     }

@@ -10,11 +10,14 @@ public class Universe : MonoBehaviour
 
         WorldGrid.LoadMapDataFromPhysicalTiles();
 
+        GameObject spawnLocationMarker = GameObject.FindGameObjectWithTag("SpawnLocation");
+        Vector3 nearestTileCenter = WorldGrid.worldPositionToNearestTileCenter(spawnLocationMarker.transform.position);
+        Tile spawnTile = WorldGrid.getTileAtWorldPositionOnLayer(nearestTileCenter, 0);
+        Debug.Log(spawnTile);
+
         GameObject cam = GameObject.FindGameObjectWithTag("MainCamera");
         GameObject player = PlayerBuilder.getBasePlayerObject();
         PlayerController playerController = player.GetComponent<PlayerController>();
-        Tile spawnTile = null;
-        WorldGrid.map.TryGetValue(playerController.spawnLocation, out spawnTile);
         playerController.teleportToTile(spawnTile);
         player.GetComponent<PlayerController>().playerCamera = cam;
         Vector3 camPosition = new Vector3(0, 12, -10);

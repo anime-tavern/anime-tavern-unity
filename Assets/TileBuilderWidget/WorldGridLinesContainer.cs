@@ -141,6 +141,10 @@ public class WorldGridLinesContainer : MonoBehaviour
                     {
                         this.toggleTilesWalkable();
                     }
+                    else if (TileBuilderWindow.instance.brushType == TileBuilderWindow.BrushType.Paint)
+                    {
+                        this.paintTiles();
+                    }
                 }
             }
             else if (currentEvent.type == EventType.MouseUp)
@@ -299,6 +303,30 @@ public class WorldGridLinesContainer : MonoBehaviour
                 tConfig.isEastBorderImpassable = isEastImpassable;
                 tConfig.isSouthBorderImpassable = isSouthImpassable;
                 tConfig.isWestBorderImpassable = isWestImpassable;
+            }
+        }
+    }
+
+    /**
+     * Toggles the isWalkable flag on tiles
+     */
+    public void paintTiles()
+    {
+
+        Vector3[] gridGuidelineTileCenters = GridGuidelines.gridGuidelineTileCenters.ToArray();
+        foreach (Vector3 tileCenterPositionInObjectSpace in gridGuidelineTileCenters)
+        {
+            Vector3 tileCenterPosition = WorldGrid.worldPositionToNearestTileCenter(
+                GridGuidelines.currentGuidelinesRenderFromPosition
+            ) + tileCenterPositionInObjectSpace;
+
+            // The current tile layer where tiles are being adjusted
+            int currentLayer = TileBuilderWindow.instance.gridLayer;
+
+            Tile existingTile = WorldGrid.getTileAtWorldPositionOnLayer(tileCenterPosition, currentLayer);
+            if (existingTile != null)
+            {
+                existingTile.meshRenderer.material = (Material) TileBuilderWindow.instance.materialField;
             }
         }
     }
